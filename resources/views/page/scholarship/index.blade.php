@@ -32,9 +32,9 @@
                   <div class="caption py-3 px-2">
                     <h2 style="margin-bottom: 10px;"><a style="font-size: 22px; color:black" href="{{route('scholarship.detail',$post->id)}}">{{$post->title}}</a></h2>
                     <p style="font-size: 15px;margin-top:5px;    margin-bottom: 15px;">{{$post->description}}</p>
-                    <img style="width:40px; height:40px; border-radius:50%;margin-right: 13px;" src="{{asset('upload/avatar/'.$post->user->avatar)}}" alt="">
+                    <!-- <img style="width:40px; height:40px; border-radius:50%;margin-right: 13px;" src="{{asset('upload/avatar/'.$post->user->avatar)}}" alt=""> -->
                     <ul class="like-com">
-                      <li>{{$post->user->full_name}}</li>
+                      <!-- <li>{{$post->user->full_name}}</li> -->
                       <li>
                         <a style="position:relative; top:-6px" href="javascript:void(0)"><i class="la la-heart"></i>
                           {{$post->total_like}}
@@ -61,7 +61,7 @@
             <div class="right-sidebar">
               <div class="widget widget-about">
                 <img src="images/wd-logo.png" alt="">
-                <h3>Ybox.com.vn</h3>
+                <h3>SoK.com.vn</h3>
                 <span>Nơi tuyển dụng tốt nhất</span>
                 <div class="sign_link">
                   <h3><a href="javascript:void(0)" title="">We are Pro</a></h3>
@@ -72,17 +72,16 @@
                 <div class="jobs-list">
                 <div class="sd-title">
 									<h3>TOP BÀI ĐĂNG</h3>
-									<i class="la la-ellipsis-v"></i>
 								</div>
                 @foreach($postTop as $post )
 								<div class="jobs-list">
 									<div class="job-info">
 										<div class="job-details">
 											<h3>{{$post->title}}</h3>
-											<p>{!!$post->content!!}</p>
 										</div>
 										<div class="hr-rate">
-											<span>{{$post->user->full_name}}</span>
+                      <img style="width:40px; border-radius:50%; margin-right: 5px;" src="{{asset('upload/avatar/'.$post->user->avatar)}}" alt="">
+                      <span>{{$post->user->full_name}}</span>
 										</div>
 									</div>
 									<!--job-info end-->

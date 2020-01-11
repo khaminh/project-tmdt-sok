@@ -38,7 +38,7 @@
             <div class="menu-btn">
                 <a href="#" title=""><i class="fa fa-bars"></i></a>
             </div><!--menu-btn end-->
-            <div class="user-account" style="width: 118px;">
+            <div class="user-account">
 
                 @if(Auth::user() !== null)
                     <div class="user-info">

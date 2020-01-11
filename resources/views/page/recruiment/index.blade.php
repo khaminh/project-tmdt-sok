@@ -57,7 +57,7 @@
 								<!--user-profile end-->
 								<ul class="user-fw-status">
 									<li>
-										<a href="#" title="">View Profile</a>
+										<a href="page/profile" title="">View Profile</a>
 									</li>
 								</ul>
 							</div>
@@ -125,10 +125,9 @@
 											</ul>
 
 										</div>
-										<div class="job_descp">
+										<div class="job_descp job_descp_custom">
 											<h3>{{$postNew->title}}</h3>
 											<p>{!! $postNew->content !!}</p>
-
 										</div>
 										<div class="job-status-bar">
 											<ul class="like-com">
@@ -371,27 +370,30 @@
 						<div class="right-sidebar">
 							<!--widget-about end-->
 							<div class="widget widget-jobs">
-								<div class="sd-title">
+                <div class="jobs-list">
+                <div class="sd-title">
 									<h3>TOP BÀI ĐĂNG</h3>
-									<i class="la la-ellipsis-v"></i>
 								</div>
-								@foreach($postTop as $post )
+                @foreach($postTop as $post )
 								<div class="jobs-list">
 									<div class="job-info">
 										<div class="job-details">
 											<h3>{{$post->title}}</h3>
-											<p>{!!$post->content!!}</p>
 										</div>
 										<div class="hr-rate">
-											<span>{{$post->user->full_name}}</span>
+                      <img style="width:40px; border-radius:50%; margin-right: 5px;" src="{{asset('upload/avatar/'.$post->user->avatar)}}" alt="">
+                      <span>{{$post->user->full_name}}</span>
 										</div>
 									</div>
 									<!--job-info end-->
-									
+                  
 								</div>
-								@endforeach
-								<!--jobs-list end-->
-							</div>
+                @endforeach
+            
+                  <!--job-info end-->
+                </div>
+                <!--jobs-list end-->
+              </div>
 							<!--widget-jobs end-->
 						</div>
 						<!--right-sidebar end-->

@@ -30,7 +30,6 @@ Route::group(['prefix' => 'page'], function () {
     Route::get('/', 'Page\HomeController@index');
     Route::get('/password', 'Page\UserController@index');
     Route::post('/password', 'Page\UserController@edit')->name('edit_password');
-    Route::post('/reset', 'Page\UserController@update')->name('reset');
 
     Route::group(['prefix' => 'profile'], function () {
         Route::get('/','Page\ProfileController@index');
@@ -122,3 +121,7 @@ Route::get('status', 'PaymentController@getPaymentStatus');
 
 
 Auth::routes();
+
+Route::post('reset-password', 'ResetPasswordController@sendMail');
+Route::put('reset-password', 'ResetPasswordController@reset')->name('ybox.reset.pass');
+Route::get('confirm-token', 'ResetPasswordController@viewConfirmToken');

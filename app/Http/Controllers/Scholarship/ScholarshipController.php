@@ -18,18 +18,20 @@ class ScholarshipController extends Controller
         $request->validate(
             [
                 'title' => 'required',
-                'content' => 'required'
+                'content' => 'required',
+                'description' => 'required'
             ],
             [
                 'title.required' => 'Bạn chưa nhập tiêu đề',
                 'content.required' => 'Bạn chưa nhập nội dung',
-
+                'description.required' => 'Bạn chưa nhập mô tả',
             ]
         );
 
         $scholarship = new Post();
         $scholarship->title =  $request->title;
         $scholarship->content =  $request->content;
+        $scholarship->description =  $request->description;
         $scholarship->type_id = 2;
         $scholarship->create_by = 1;
         if ($request->hasFile('image')) {
@@ -64,17 +66,20 @@ class ScholarshipController extends Controller
             $request,
             [
                 'title' => 'required',
-                'content' => 'required'
+                'content' => 'required',
+                'description' => 'required'
 
             ],
             [
                 'title.required' => 'Bạn chưa nhập tiêu đề',
                 'content.required' => 'Bạn chưa nhập nội dung',
+                'description.required' => 'Bạn chưa nhập mô tả',
             ]
         );
         $scholarship = Post::findOrFail($id);
         $scholarship->title =  $request->title;
         $scholarship->content =  $request->content;
+        $scholarship->description =  $request->description;
         $scholarship->type_id = 2;
         $scholarship->create_by = 1;
         if ($request->hasFile('image')) {

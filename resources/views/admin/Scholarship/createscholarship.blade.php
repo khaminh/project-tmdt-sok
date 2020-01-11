@@ -36,6 +36,10 @@
                 <input name="title" type="text" class="form-control" placeholder="Nhập tiêu đề">
             </div>
             <div class="form-group">
+                <label>Mô tả</label>
+                <input name="description" type="text" class="form-control ckeditor" ></input>
+            </div>
+            <div class="form-group">
                 <label>Nội dung</label>
                 <textarea name="content" type="text" class="form-control ckeditor" rows="10"></textarea>
             </div>

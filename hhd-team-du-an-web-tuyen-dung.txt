@@ -1,0 +1,45 @@
+﻿- User
++ admin
++ Hr (công ty)
++ Sinh viên
+
+- Page Member
++ trang chủ
++ tuyển dụng 
+. Hiển thị các bài tuyển dụng 
+. HR có đăng bài tuyền dụng lên  
+. Các bài tuyển dụng có : like coment share 
+
++ Học bổng 
+. Hiển thị các bài đăng học bổng theo chiều dọc
+. admin dang bai len ( dang tin tuc )
++ chi tiết học bổng
+. Hiển thị chi tiết bài đăng học bổng
+. Các bài học bổng có : like coment share 
++ user profile 
+. Sinh viên
+- avatar - họ tên - ... 
+- các bài tuyển dụng do sinh viên share 
+. Hr 
+- avatar - họ tên - ... 
+- danh sách các bài tuyển dụng đã đăng
+- Mua gói đẩy bài tuyển dụng lên top 1 gói -> 1 bài
++ user đăng nhập / đăng ký 
++ đăng ký follow user tuyển dụng
+
+Data base:
+
+-	users      : id, role_id, full name, email, password, gender, total_follow
+-	role       : id, name
+-	post       : id, type_id, title, content, end_date, image, total_coment, total_like, total_share, create_by, create_at
+-	type_ post : id, name 
+-       like_post  : id, user_id, post_id
+-       coment_post: id, user_id, post_id
+-       share_post : id, user_id, post_id
+-       follow_hr  : id, user_id, hr_id
+
+tài khoản : lexuanhuy4497@gmail.com	
+mật khẩu  : Matkhau1209 
+account personal: sb-btx47y843504@personal.example.com
+account bussiness: sb-2wxg5845584@business.example.com
+

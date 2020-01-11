@@ -1,0 +1,488 @@
+-- BACK END 
+
++ Khi user thực hiện một request lên server (có thể là truy cập vào url: abc.vn ) 
+
+-- Server Apache (php)
+ 
+Apache sẽ đón nhận request và thực hiện cái yêu cầu (ví dụ nó sẽ truy cập vào folder và lấy 1 file.php mà request yêu cầu)
+
+tiếp theo nó gửi cái file đó (file đó sẽ chứa code html css js php ) đến app php.exe (thằng này sẽ biên dịch code)
+
+khi gặp đoạn code có <?php // code ?> nó sẽ thực thi ( kiểu xử lý logic các biểu thức ấy , các 
+dòng lệnh của php -> kết quả của quá trình này thì cũng trả về text là chính)  còn những đoạn code như (html css js) thì nó bỏ qua và trả về text thôi
+
+ví dụ bạn có 1 file ( <html> <h2 style="color:red"> title </h2> <?php echo('abc') ?> </html>
+
+thì kết quả sau khi thằng php.exe build sẽ dc <html> <h2 style="color:red"> title </h2> abc </html> 
+
+--> file này dc trả về apche -> trình duyệt -> đọc file code -> người dùng thấy
+
+--> Thì tại sao lại cần các ngôn ngữ back end :
+
++ Kết nối với csdl (bảo mật các thứ nữa ... ) 
+
+nhưng lý do chính là vậy 
+
+-- 1 cái server thường có 
++ 1 cái app nhận request từ trình duyệt và gửi reponse về cho trình duyệt
++ 1 cái app để biên dịch code backend
++ 1 cái app database 
+
+-- Project
+1. Cài đặt project clone từ git về
+  + start xampp server  
+    . apache
+    . Mysql
+  + chạy các lệnh ở terminal: 
+    . Thiết lập cấu hình file .env (thêm db name + tk  + pass vào là dc )
+cái file .env này lúc push project lên git nó k push lên ấy nên lúc nãy k có
+    . composer install // cài đặt thư viện  
+    . Run php artisan key:generate.  // tạo app key cho project (thích thì tạo k thì thôi)
+    . Run php artisan migrate // cài đặt cơ sở dữ liệu (laravel có cái migration lát mình cho xem)
+    . php artisan config:cahe // một số config của laravel dc lưu trữ nên khi thay đổi phải chạy lệnh này để clear và cache lại
+    . php artisan db:seed // Thêm dữ liệu đã tạo sẵn trong folder seed 
+    . php artisan serve // bật server ảo của laravel -> localhost:8000 để truy cập website
+
+
+. thì bạn nhìn cái folder database và folder migration thì mấy cái file này 
+
+sẽ dùng để tạo table cho db 
+
+ví dụ bên kìa là bảng role
+
+thì laravel có cái hay là cái này 
+
+khi tạo bảng bằng cái này 
+muốn tạo csdl mình chỉ cần chạy lệnh 
+php artisan migrate tất cả code trong các
+file này sẽ dc chạy lần lược và tạo ra các 
+
+bảng trong db đấy
+
+thôi tí chạy để mình giải thích cái db này đã
+
+ok
+
+2. Thiết kế cơ sở dữ liệu
+
+thì lập trình là xử lý dữ liệu và cho ra kết quả mà mình mong muốn -> đầu tiên phải có dữ liệu
+
+(ngày xưa chưa có cơ sở dữ liệu người ta dùng file để đẩy dữ liệu vào -> đọc file -> lấy dữ liệu ra -> xử lý logic)
+
+để mình chạy code r bật csdl lên r giải thích dần
+
+
+-- Bảng User :
+* ( cột id mỗi bảng đều có 1 trường id -> phân biệt từng bản ghi dữ liệu -> nó như kiểu CMND ấy )
+* ( cột created_at / updated_at xác định thời gian tạo và thời gian thay đổi )
+. các thông tin của user
+. role_id -> dùng để phân loai user 
+
+( sản phẩm này có 3 loại user) 
+
+-- Bảng role 
+. name ( tên role -> hr / student /admin)
+--> Từ 2 bảng này khi 1 user đăng nhập mình sẽ dùng cái role_id để cho phép từng thằng user thực hiện dc những quyền của nó
+
+( quan hệ giữa User và role là 1 - 1 -> 1 user có 1 quyền )
+
+-- Bảng Type Post
+. Loại bài viết (tuyển dụng , học bổng)
+
+-- Bảng Post
+. Thông tin của bài viết
+- tiêu đề , nội dung , số like , số share , số comment , ..
+- user_id (để xác định xem thằng nào viết bài post này)
+
+(quan hệ giữa type post và post là 1 - n / 1 loại bài viết sẽ có nhiều bài viết  - 1 bài viết chỉ thuộc 1 loại bài viết)
+
+-- Các Bảng Comment_post / Like_post / Share_post
+- các trường ( user_id / post_id ) -> từ 2 cái này sẽ xác định dc bài viết này có thằng nào like / comment / share
+- trong bảng comment có trường content (nội dung comment)
+
+( quan hệ giữa post với mấy thằng này là 1 - n / 1 bài viết có nhiều thằng like / comment / ...)
+
+--> thì đó mấy bảng còn lại tí đi vô code mình quay lại giải thích
+
+
+
+
+-- Các Page 
+. Trang chủ hiện tại chưa có gì @@
+
+-- Trang học bổng 
+. Hiển thị các bài viết học bổng 
+. Bổ sung thêm các bài tuyển dụng top ( bài dc nạp phí ở đó) -> tí mình làm chức năng paypal rồi mai thêm cục đó vào
+. Mỗi bài viết sẽ hiển thị thông tin của bài viết
++ image 
++ title 
++ description
++ user name
++ total like
++ total comment
++ total share
++ created_at
+
+--> hiển thị như nào mình sẽ giải thích sau
+
+-- Chi tiết học bổng 
+. Hiển thị thông tin chi tiết bài viết dữ liệu cũng tương tự và thêm 1 số thứ 
+
++ title
++ created_at
++ total_like
++ total_share
++ content
++ các chức năng ( comment like share )
+
+
+---- dữ liệu của 2 trang này được đọc từ bảng post thôi 
+---- trang chi tiết nó sẽ đọc theo cái id của bài viết đó 
+
++ Chức năng like 
+
+Insert vào bảng post_like (id_user và id_post) 
+Cập nhật trường total_like += 1;
+
+hiểu k bạn, hiểu mà like là nó bị reload hả hiện tại mình làm thế này thôi
+
+h viết thêm ajax nữa giải thích k kịp thật
+
+ấn lần nữa thì  :
+Delete bảng post_like  where (id_user = thằng đang đăng nhập và id_post = id bài post này) 
+Cập nhật trường total_like -= 1;
+
+comment follow chia sẻ hoàn toàn tương tự 
+
+
+Cái view cũng vậy thôi 
+khi click vào bài viết thì cột total_view += 1 hiểu
+
+Top bài viết tuyển dụng cũng nằm ở đây ( mai bổ sung ) banner quảng cáo bạn thích bỏ cái gì vô cũng dc
+
+
+-- Tạm thời xem như xong 2 trang học bổng + chi tiết bài viết học bổng nha bạn 
+
+
+-- Trang tuyển dụng
++ Thêm bài viết tuyển dụng : 
+( Thêm sửa xóa @@)
+. Comment bài viết (tương tự comment bài học bổng)
+. Reply (cũng tương tự luôn khác là insert vào bảng reply comment id_comment id_user)
+
++ Hiện thỉ các bài viết tuyển dụng theo thứ tự id giảm giần (order by id desc ) theo cái mới nhất ấy
+
++ Top Copany 
+
+. Select 8 thằng where follow to đến nhỏ
+
++ Top bài đăng bổ sung sau
+
+
+--> Hiện tại là vậy mai tiếp nha bạn: ok bạn mà mai là hoàn thiện luôn chưa 
+
+ok bạn mình sẽ cố gắng... kkk nói chung có trước ngày 8 là được oke
+
+mùng 8 báo cáo ak đúng rồi 
+ok bạn lưu file này lại đi oke bạn bye mình nghỉ tí đã oke 
+
+
+
+
+
+đầu tiên admin / sẽ đăng nhập 
+
+khi thêm nó sẽ insert dữ liệu vào bảng post và type_id = 2 ( id học bổng = 2)
+
+khi bạn dùng tài khoản admin đăng nhập nó sẽ chuyển hướng đến trang localhost:8000/admin/scholarship/create
+
++ Trang quản trị admin hiện tại đang có 2 chức năng là quản lý người dùng và quản lý bài viết học bổng
+
+quản lý = thêm sửa xóa cơ sở dữ liệu thôi @@
+
+-- bây h mình thêm một bài viết học bổng (insert vào bảng post )
+
+backend bạn cứ hình dùng là thêm sửa xóa csdl thôi chỉ có vậy thôi k có gì đâu T_T
+
+ví dụ như trang facebook bạn viết status -> nó sẽ insert vào
+
+bạn nhìn thấy trên tường của bạn là nó dc select ra 
+
+bạn xóa nó đi -> deletê
+
+bạn sửa nó -> update 
+
+đấy okok thank nha hiểu 
+
+mình sửa cho bạn luôn thì ở đoạn này nó sẽ nên hiện cái mô tả của bài viết chứ k phải 
+
+nội dung
+
+mình chỉnh lại sau nhìn xấu xấu ấy :D
+
+thì đó nó sẽ có thêm sửa xóa và hiển thị 
+
+bây h nó đã có một bài viết học bổng rồi
+
+mình ra trang học bổng sẽ thấy có 1 bài viết
+
+
+----------------------------------------------------------------------------------
+7/1/2019
+
+. Tiếp tục hướng dẫn cách xây dựng những chức năng của page
+
+1. Đăng nhập đăng ký ()
++ đăng ký -> insert vào bảng users @@
+- User 3 thằng thì thằng hr và sinh viên có thể đăng ký 
+- Hr : role_id = 2 / Student: role_id = 1 insert cái role_id đúng với loại đó 
+( có 2 form đó bạn chọn cái nào thì role_id tương ứng với cái đó )
+
++ đăng nhập -> kiểm tra xem email với password có trong bảng user hay k ? 
+$sql = "select * from users where username = "$username" and password = "$password" 
+nếu nó trả về kết quả thì đăng nhập dc ($username và $password là giá trị của các ô input bạn nhập vào ấy)
+
+password dc lọc qua 1 hàm mã hóa trước khi insert vô Hash::make('123456') ra cái chuỗi kia đó
+
+thì câu $sql -> password = "Hash::check($password)" đấy
+
+
+hiểu k hiểu mà cho mình hỏi lúc mình ko dùng seed tạo mà tạo bằng chỗ đăng ký thì mk vẫn mã hóa đúng ko đúng bạn
+
+
+
+chưa làm cái đăng nhập bằng 2 cái kia mà 2 cái kia cũng dễ thôi dùng api có sẵn của nó @@ok ok
+
+
+ak mai bạn chuyển nốt tiền để mình gửi bạn code final nhé
+
+h mình demo cái thanh toán online cho bạn à oke mình lấy cái config trong máy paste sang cái đã
+
+------ PAYPAL
+
+- đầu tiên thì phải kết nối với api của thằng paypal này / sử dụng client id / secret truyền vào file .env
+
+khi kết nối với api thằng paypal sẽ kiểm tra mấy cái này có đúng hay k r kết nối đó bạn
+
+
+
+- tiếp theo là sử dụng Acount SANDBOX của paypal ( tài khoản ảo ấy có cả đống tiền trong ấy dùng nó để test chức năng thanh toán )
+
+https://www.sandbox.paypal.com/us/signin
+
+email   : sb-btx47y843504@personal.example.com
+password: 12345678
+
+login tk kia vaop da nhiều tiền đấy
+
+. thì cái này mình sẽ làm như sau : 
+click vào nút up post top (kích hoạt top cho bài viết)
+
+nó sẽ ra 1 cái form gồm : ô select lựa chọn các bài viết của thằng Hr đang đăng nhập
+	                  ô thời gian nằm trên top ( vài cái lựa chọn 100 usd nằm 3 ngày 200 usd 5 ngày ) 
+
+khi thằng kia chọn gói thanh toán thành công thì update lại giá trị end_date + ... 
+đấy nó vậy 
+
+-- thì những bài top mình select ra thôi where theo cái end_date 
+
+thế thôi nhỉ 
+
+-- h test cái thanh toán demo nên nhập tiền vào r gửi submit xem nó có trừ tiền của user k
+ 
+-- đó bạn thanh toán paypal dc r đấy à bản final là hoàn thiện hết hả 
+
+
+
+chức năng như cái mô tả của bạn ấy (tất cả chỉ là thêm sửa xóa tìm kiếm vào csdl )
+
+
+---------------------------------------------- CODE
+
+1. Mình hướng dẫn bạn laravel nha ok
+
+- Sau thầy hỏi tại sao lại sử dụng frame work laravel : 
+chém gió thôi ( nó ngon , cộng đồng đông , dễ hỏi ... hiện đại ) 
+làm việc nhóm phải làm = frame work thôi k thì code đến bao h (thằng một ý đấm nhau chảy máu đấy)
+... cứ chém gió câu h 
+
+- Xây dựng theo mô hình MVC ( chém gió qua về mô hình MVC tí )
+
+
+
+
+tải project về : google create project laravel / 
+vào htdoc( cái này là thư mục root của xampp là cái nó tìm code để chạy ấy) 
+nên code của chúng ta sẽ bỏ trong này
+
+. shift + chuột phải chọn open command powershell
+
+composer create-project --prefer-dist laravel/laravel ten_project
+
+
+
+
+- Công thức để xây dựng 1 chức năng 
+1. tạo route 
+2. tạo controller
+3. tạo view
+
+mấy cái này bạn biết chưa cho mình nói 1 tí 
+chưa biết nhưng bạn nói trực tiếp thí dụ như folder nào là thực hiện view hay controller hay route vậy cho dễ 
+
+mình xây dựng 1 chức năng cho bạn nhìn
+
+> thư mục route > file web.php (route là định tuyến ok giống reactjs cái này hiểu)
+- định nghĩa định tuyến
+- truyền vào tham số là url và thực hiện call back
+Route::get :: gọi phương thức static của object 
+-> gọi phương thức bình thường 
+
+get là request get thường thì gõ url 
+post là request post thường thì submit form
+
+route::group nhóm các route / thường thì để đặt cái tiền tố đường dẫn 
+
+  Route::get('abc','Page\ProfileController@index');
+	
+
+có nghĩa là : Nó sẽ thực hiện function index trong class ProfileController
+	  Route::get('abc','ten_class_trong_controller@ten_method');
+
+Page\Proifile tức là Thư mục Page/Profile.php 
+để gọi dc class trong 1 thư mục thì \
+
+
+chúng ta chủ yếu làm việc với thư mục 
+
+app/http/controller : xử lý logic các chức năng
+
+route/web      : định nghĩa định tuyến
+
+resource/view  : chứa các layout
+
+đấy ok k bạn cái providers để chi v bạn
+
+provider thì nó chứa các thư viện sẽ dc load của frame work 
+
+
+mình chỉ quan tâm mấy cái trên thôi
+
+console   : chứa code -> các lệnh thao tác với pakage
+exception : chứa code xử lý exception 
+Helper    : hàm trợ giúp do mình định nghĩa thêm để dùng
+
+Http      : tí quay lại nói
+bootstrap : not bootstrap 4 -> chứa các file để khởi động laravel 
+config    : chứa các giá trị cấu hình
+resource  : chứa view / js / css / lang (thay đổi ngôn ngữ ..) 
+storage   : kho chứa của laravel (thường thì các file dc tạo ra sẽ để trong này )
+test      : tester / <khi code xong thì dev sẽ code cái unit test để test app> mình chưa đụng vào cái này bao h
+vendor    : chứa các thư viện bên ngoài 
+public    : chứa các file mà người dùng có thể truy cập dc như (js css image) 
+.env      : file chứa các giá trị cấu hình (database, paypal) -> chạy lệnh php artisan config:cache -> các file trong config sẽ lấy giá trị từ file này lên và lưu vào
+
+tóm lại chúng ta chỉ quan tâm 1 vài thư mục thôi
+
+bạn chỉ quan tâm thư mục app/http/controller 
+để mình làm ví dụ
+
+khi bạn truy cập add-role -> nó sẽ gọi method addRole của class RoleController trong thư mục http / controller
+class chưa tồn tại 
+
+lệnh tạo controller : php artisan make:controller tenController
+khi tạo bằng cmd thì mình đỡ phải gõ mấy cái import thư viện tên class .. viết các methdo thôi thích thì tạo tay cũng dc
+
+
+Nhiều thời gian hơn thì ngon 
+
+thì đó công thức 
+
+1. Tạo route (ok cái này chưa ) 
+2. Tạo controller cũng ok chưa bạn thì ví dụ bạn muốn làm chức năng thêm bài viết
+3. tạo view -> resource/view 
+
+dùng hàm return view() để gọi cái view bạn cần 
+hiểu đoạn này k bạn hiểu à bạn demo thử 1 hành động luôn 
+
+đó bạn ok hiểu luôn rồi 
+
+
+Mô hình mvc 
+
+phân tách ứng dụng ra 3 phần 
+
+1.view giao diện
+2. model (thì bạn cứ hình dung mỗi bảng trong csdl sẽ có  mdel)
+như ở trên thì bảng role có model là Role 
+
+Class Role chứa các phương thức như thêm sửa xóa thôi tìm kiếm
+
+find($id)  = select * from role where id = 1
+cho mình hỏi là model này do thằng laravel nó hỗ trợ luôn đúng ko
+
+thì đó là model
+
+bạn cứ nhớ công thức xây dựng 1 chức năng 
+1. tạo route -> controller -> view
+
+controller sẽ gọi view về
+
+controller sẽ k bao h thao tác với db mà model sẽ thực hiện việc đó muốn thêm sửa xóa
+
+thì dùng model gọi các hàm thêm sửa xóa do model định nghĩa
+
+controller chỉ điều khiển thôi
+controller trao đổi qua lại giữa model và view đó bạn
+
+ok
+ 
+thì h mình giới thiệu từng chức năng trong code
+
+
+đường dẫn 
+
+view/page/home.blade.php
+
+từ route/web.php bạn nhìn là có thể thấy code các chức năng nó nằm ở đâu
+
+
+
+ 
+
+
+
+à có chức năng quên mk luôn ùi hả @@ chưa
+
+mà cái đăng nhập trong laravel bạn chỉ cần gõ 1 2 lệnh nó tự có luôn 
+
+clone dc project về mình làm cho bạn xem r dùng cmd gõ 1 lệnh đó nó tự tạo 
+
+chức năng đăng nhập cho mình luôn
+login controller đăngn hập cái này đăng ký
+
+custom lại theo ý mình thôi, vậy mai bạn làm luôn phần quên mk nhanh ko ok
+
+cái middleware là gì v / bỏ qua haha oke 
+
+quan tâm cái view nữa thôi
+
+
+
+
+thằng học bổng tương tự cái tuyển dụng đúng ko ukm thằng nào cung them sua xoa thoi
+
+cai nay k su dung nha cai nay custom lai cai dang nhap kia roi dùng cái layout màu cam ấy
+
+
+ok rồi á 
+ok ngủ thôi à
+phân trang chủ cái slider nó chuối vậy
+bạn kiếm cái nào ngon ngon cái rồi bỏ vô cái layout thay cái oke cái này để mình chỉnh lại cũng được tks 
+có nhiều time thì ngon @@ hehe
+thôi ngủ thôi à sáng mai nhớ 8h setup giúp mình con final ok bạn
+oke pye <3
+
+
+
+ 

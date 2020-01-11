@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>yBox - đăng nhập</title>
+    <title>SOK - đăng nhập</title>
     <base href="{{asset('')}}">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -78,7 +78,7 @@
                             <div class="sign_in_sec" id="tab-5">
 
                                 <h3>Quên mật khẩu</h3>
-                                <form method="POST" action="{{ route('reset') }}">
+                                <form method="POST" action="reset-password">
                                     @csrf
                                     <div class="row">
                                         <div class="col-lg-12 no-pdd">

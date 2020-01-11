@@ -1,0 +1,146 @@
+bật server php -> php artisan serve -> localhost:8000
+
+
+Cái paypal code nằm ở trong paymentController ( nói chung cái này bạn nói sử dụng thư 
+
+viện hỗ trợ mình chỉ cần truyền vào các giá trị như app api key ...)
+
+client_id ( id của chủ tài khoản bán ) 
+secret (mã bảo vệ )
+
+
+tk bán: sb-2wxg5845584@business.example.com
+mật khẩu: 12345678
+
+tk mua: 
+
+alo k tí bạn vào tk của mình r demo dc k okok
+
+
+
+https://developer.paypal.com/ 
+
+tài khoản : lexuanhuy4497@gmail.com	
+mật khẩu  : Matkhau1209 
+
+
+vô rồi vào phần sandbox accounts  kéo xuống chọn 2 tài khoản defaul ở dưới pass là 1 -> 8
+
+coppy tên tài khoản 
+sb-btx47y843504@personal.example.com ( personal  tk khách ) 
+sb-2wxg5845584@business.example.com  (buisness  tk chủ website nó chuyển tiền vào đây )
+pass : 12345678
+
+
+
+nhà tuyển dụng thêm 1 bài viết -> muốn kich hoat bài viết lên top thì vô phần profile của nó
+
+-> chọn up post top -> lựa chọn bài tuyển dụng -> chọn gói phí kích hoạt
+
+-> kích hoạt chuyển đến trang thanh toán paypal bây h bạn vào
+
+https://developer.paypal.com/
+
+
+tài khoản : lexuanhuy4497@gmail.com	
+mật khẩu  : Matkhau1209 
+
+-> Mục sandbox -> account -> chọn 2 tk dưới cùng
+
+tk khách là cái personal cái thứ 3 dùng để đăng nhập khi mua gói kích hoạt 
+sb-btx47y843504@personal.example.com 
+pass : 1->8
+
+
+lúc nãy chọn gói ở top 3 ngày - 100 usd
+
+khi kích hoạt bài viết sẽ nằm trên top 3 ngày
+
+cái này lúc khi thêm bài viết tuyển dụng end_date = null 
+
+khi mua gói kích hoạt và xử lý thành công thì update lại cột end_date của bài viết đó
+
+gói 3 ngày thì = time hiện tại + 3 ngày
+update post end_date = now + 3 ngày đấy minh thấy khúc if else bạn ko dùng switch case
+
+cập nhật lại khi thanh toán thành công 
+
+dữ liệu top bai đăng dc select theo cái end_date này
+
+controller các trang member sẽ nằm trong page 
+
+trang học bổng thì là page/scholarshipController
+
+controller của admin thì nằm trong từng mục học bổng Scholarship/scholarshipcontroller
+
+
+vs chưa load code mới clone về @@
+
+ $postTop = Post::where('end_date' , '>' , Carbon::now())->get();
+đây các bài viết top dc select theo end_date > thời gian hiện tại 
+
+
+ví dụ bạn kích hoạt gói 3 ngày vào 8h49 8/1/2019 -> update lại end_date = 8h49 11/1/2019
+
+dữ liệu của bảng top dc select theo cái end_date > thời gian hiện tại 
+
+tức là đến 8h49 11/1/2019 bạn sẽ k select dc cái bài viết kia ra nữa
+
+
+đấy vậy thôi top sẽ dc select ra ở 2 trang tuyển dụng và trang index học bổng
+
+
+
+
+kiểm tra tài khoản thanh toán 
+
+
+
+https://www.sandbox.paypal.com/us/home
+
+
+đăng nhập 2 cái tài khonả kia
+
+đăng nhập tk khách cái thứ 3 xem tiền trừ  k ?
+đăng nhập tk chủ cái thứ 4 xem + tiền k là ok ?
+
+bạn sửa cái trang chủ 
+
+viet bai viet hoc bong thi dang xuat dung tai khoan admin 
+
+
+trang chủ page/home.blade.php 
+
+bạn bật lại project đi vs nó đang dùng bản code cũ chưa có code mới 
+
+ở vẫn cái cũ trong khi trong folder là cái mới 
+
+
+
+để mình tắt thử mấy cái đó 
+
+sao vậy nhỉ 
+k hiện code mới ak bạn
+
+cùng lắm lát bạn mở lên thế này cho thầy xem @@ mà thầy xem cũng k hiểu code đâu
+
+kkk hợp lý 
+chém gió hợp lý là dc oke 
+rồi cám ơn bạn nha 
+bạn chạy qua lại 1 lần nữa cho chắc
+
+bật project chạy lại từ đầu bật xampp các thứ 
+
+code trong nay code cu ma
+
+ok ok vscode bi ngáo :D
+oke rồi á để mình ngâm có j thắc mắc mình hỏi được ko
+
+ok bạn à cái quên mk mình chưa làm nha h mình đang ở quan net khi đêm ở nhà bạn @@
+
+
+ok khỏi cũng được 
+ko demo cho bã xem là được 
+ok vậy nha tks bye bạn cần học laravel cần tài liệu php gì pm mình o k ok 
+ 
+top copany trong trang hoc bong  thi select ra 5 thang moi nhat thoi  ban ok đợi mình xem sơ lại lần nữa nếu ko có j thì oke hết

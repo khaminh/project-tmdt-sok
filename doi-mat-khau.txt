@@ -1,0 +1,47 @@
+
+Chức năng: Quên mật khẩu 
+
+
+1. Nhập email : khaminhbui98@gmail.com
+
+-> thông báo kiểm tra token trong email
+
+2. vào mailTrap https://mailtrap.io/inboxes
+
+-> Chọn ybox chọn cái mail đầu tiên
+
+3. Ông ấn reset password 
+
+-> dc link : http://localhost/password/reset/9kN26HrB15jU5OE4GXb6PZQFeP9xRqD7MHOurph4KvwlNGdmmI8gM7K0PnYr?email=khaminhbui98%40gmail.com
+
+-> coppy cái mã token : 9kN26HrB15jU5OE4GXb6PZQFeP9xRqD7MHOurph4KvwlNGdmmI8gM7K0PnYr
+
+-> đến đây ông nói với cô là em chưa custom dc cái nội dung gửi tin nhắn ý định là 
+
++ hiện thị ra cái mã xác thực người dùng sẽ dùng nó để đổi mật khẩu
++ hiện cái nut ấn để đến trang đổi mật khẩu ( sr ông tui cũng chưa custom lại cái đổi mk bao h )
+
+4. ông gõ địa chỉ :localhost:8000/confirm-token 
+
+-> xuất hiện form :
+
++ mật khẩu mới
++ mã xác thực lúc nãy ông paste vào 
+
+-> submit đổi thành công mật khẩu -> ông có thể vào Database cho bà cô xem -> dùng mật khẩu mới login
+
+
+------------------> Bản chất của việc đổi pass = xác thực mail -------------------------------
+
+Bảng reset_password chứa 2 trường : token  - email  
+
+Khi ông chọn chức năng quên mật khẩu và nhập email -> hệ thống sẽ insert Email ông vừa nhập + random 1 cái mã token vào bảng reset_password
+
+-> Hệ thống gửi token vào email ông vừa nhập -> Ông dùng token đó để đổi mật khẩu (giống như xác thực đt vào facebook đó ông nó gửi 1 cái mã 
+
+vào đt của ông r mình gửi lại nếu trùng thì vào) -> Hệ thống kiểm tra token và email (này đã được lưu đâu đó) nếu có trong bảng pass_reset  ->
+
+ông đổi dc mật khẩu -> đổi xong bảng pass_reset xóa (email và token) đó đi   -> ông test trong csdl là thấy
+
+@@
+

@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>yBox - đăng nhập</title>
+    <title>SOK - đăng nhập</title>
     <base href="{{asset('')}}">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">

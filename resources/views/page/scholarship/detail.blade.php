@@ -187,7 +187,7 @@
                     </div>
                     <!--widget-user end-->
                     <div class="widget widget-adver">
-                        <img src="http://via.placeholder.com/370x270" alt="">
+                        <img style="width: 100%;" src="https://media.giphy.com/media/KHVjGrRVx8XMktX2p6/giphy.gif" alt="">
                     </div>
                     <!--widget-adver end-->
                 </div>

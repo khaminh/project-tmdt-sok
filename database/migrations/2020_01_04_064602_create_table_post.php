@@ -17,7 +17,7 @@ class CreateTablePost extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('type_id');
             $table->string('title');
-            $table->string('content');
+            $table->text('content');
             $table->dateTime('end_date')->nullable();
             $table->string('image')->nullable();
             $table->integer('total_coment')->default(0);
